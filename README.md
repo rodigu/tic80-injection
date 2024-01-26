@@ -57,3 +57,5 @@ print(hello)
 -- <TILES>
 ... -- (Cart data)
 ```
+
+![GIF demo](./injector_demo.gif)
