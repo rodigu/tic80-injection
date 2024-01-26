@@ -1,4 +1,4 @@
-local has_args = (#arg==0)
+local has_args = (#arg~=0)
 
 --- Reads file with given name
 ---@param filename string
@@ -13,8 +13,8 @@ function ReadFile(filename)
   return lines
 end
 
-function ReadConfig()
-  local config_lines = ReadFile('config')
+function ReadConfig(config_filename)
+  local config_lines = ReadFile(config_filename)
   
   local target = string.sub(config_lines[1], #'target:' + 1)
   local input = string.sub(config_lines[2], #'in:' + 1)
@@ -71,8 +71,8 @@ function InsertCartData(new, original_data)
   ConcatTable(new, TableSlice(original_data, cart_data_loc))
 end
 
-function WriteFile()
-  local target, input = ReadConfig()
+function WriteFile(config_filename)
+  local target, input = ReadConfig(config_filename)
   local input_names = SplitString(input, ',')
 
   local original_data = ReadFile(target..'.lua')
@@ -91,4 +91,10 @@ function WriteFile()
   file:close()
 end
 
-WriteFile()
+local config_filename = 'config'
+if has_args then
+  config_filename = arg[1]
+  print('Using config file: '..config_filename)
+end
+
+WriteFile(config_filename)
