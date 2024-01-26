@@ -1,2 +1,2 @@
-target:cart
-in:game
+target:game
+in:var,print
